@@ -9,7 +9,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Prevent SQLite locking while Next.js builds pages in parallel.
+# Prevent SQLite locking during the Next.js build.
 ENV DATABASE_PATH=:memory:
 
 RUN npm run build
@@ -20,6 +20,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 ENV DATABASE_PATH=/app/data/chalk.db
 
 COPY --from=builder /app/.next/standalone ./
